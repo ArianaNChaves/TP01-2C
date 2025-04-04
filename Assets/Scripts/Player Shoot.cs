@@ -14,6 +14,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private float shootRange;
     [SerializeField] private float fireRate;
     [SerializeField] private float laserDuration;
+    [SerializeField] private int damage;
     
     private float _fireTimer;
     private LineRenderer _lineRenderer;
@@ -33,17 +34,20 @@ public class PlayerShoot : MonoBehaviour
     private void ShootHandler()
     {
         _fireTimer += Time.deltaTime;
-        if (Physics.Raycast(laserSpawn.position, laserSpawn.forward, out RaycastHit hit, shootRange,enemyLayerMask))
+        if (Physics.Raycast(laserSpawn.position, laserSpawn.forward, out RaycastHit hit, shootRange))
         {
-            ChangeMaterial(laserHitMaterial);
-            _isAimingAEnemy = true;
+            if (hit.collider.gameObject.CompareTag("Enemy")) //todo compararlo por layermask en vez de tag
+            {
+                ChangeMaterial(laserHitMaterial);
+                _isAimingAEnemy = true; 
+            }
+            else
+            {
+                ChangeMaterial(laserNormalMaterial);
+                _isAimingAEnemy = false;
+            }
         }
-        else
-        {
-            ChangeMaterial(laserNormalMaterial);
-            _isAimingAEnemy = false;
-        }
-
+        
         if (!Input.GetMouseButtonDown(0) || !(_fireTimer >= fireRate)) return;
         _fireTimer = 0;
         _lineRenderer.SetPosition(0, laserSpawn.position);
@@ -51,7 +55,7 @@ public class PlayerShoot : MonoBehaviour
         
         if (_isAimingAEnemy)
         {
-            Destroy(hit.transform.gameObject); //todo Cambiar a hacerle danio a la vida 
+            hit.transform.gameObject.GetComponent<IDamageable>().TakeDamage(damage);
         }
 
         StartCoroutine(ShootLaser());
