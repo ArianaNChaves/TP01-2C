@@ -34,8 +34,10 @@ public class PlayerShoot : MonoBehaviour
     private void ShootHandler()
     {
         _fireTimer += Time.deltaTime;
+        IDamageable currentTarget = null;
         if (Physics.Raycast(laserSpawn.position, laserSpawn.forward, out RaycastHit hit, shootRange))
         {
+            currentTarget = hit.collider.GetComponent<IDamageable>();
             if (hit.collider.gameObject.CompareTag("Enemy")) //todo compararlo por layermask en vez de tag
             {
                 ChangeMaterial(laserHitMaterial);
@@ -53,9 +55,9 @@ public class PlayerShoot : MonoBehaviour
         _lineRenderer.SetPosition(0, laserSpawn.position);
         _lineRenderer.SetPosition(1, laserSpawn.position + (laserSpawn.forward * shootRange));
         
-        if (_isAimingAEnemy)
+        if (_isAimingAEnemy && currentTarget != null)
         {
-            hit.transform.gameObject.GetComponent<IDamageable>().TakeDamage(damage);
+            currentTarget.TakeDamage(damage);
         }
 
         StartCoroutine(ShootLaser());
