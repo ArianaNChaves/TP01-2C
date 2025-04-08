@@ -14,7 +14,7 @@ public class EnemyDamage : MonoBehaviour
         _timer += Time.deltaTime;
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision other) //todo Agregar un temblor de camara cuando el dron es daniado
     {
         if (!other.gameObject.CompareTag("Player")) return;
         if (!(_timer >= 0.5f)) return;

@@ -6,7 +6,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private int health;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage) //todo agregar alguna UI o algo para ver la vida de los enemigos?
     {
         health -= damage;
         if (health <= 0)
