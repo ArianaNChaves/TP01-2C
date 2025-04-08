@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         _rigidbody.velocity = new Vector3(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
+
     }
 
     private void VerticalMovement()

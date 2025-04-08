@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             Death();
         }
         
-        playerUI.UpdateHealth();
+        playerUI.UpdateHealth(); //todo Esto podria ser un evento para sacar la referencia a la UI
     }
     
     public int GetHealth()

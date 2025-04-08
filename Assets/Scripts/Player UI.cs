@@ -14,7 +14,7 @@ public class PlayerUI : MonoBehaviour
     
     public void UpdateHealth()
     {
-        playerHealth.text = playerHealthScript.GetHealth().ToString();
+        playerHealth.text = playerHealthScript.GetHealth().ToString(); //todo Esto podria ser un evento para sacar la referencia al player y que haya un Game Manager
 
     }
 }
