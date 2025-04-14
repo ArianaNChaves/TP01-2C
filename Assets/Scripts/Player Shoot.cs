@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private Transform laserSpawn;
+    [SerializeField] private GameObject laserGameObject;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Material laserNormalMaterial;
     [SerializeField] private Material laserHitMaterial;
@@ -19,20 +20,26 @@ public class PlayerShoot : MonoBehaviour
     private float _fireTimer;
     private LineRenderer _lineRenderer;
     private bool _isAimingAEnemy;
+    private bool _isLaserActive;
     
     private void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
+        _isLaserActive = true;
+        laserGameObject.SetActive(_isLaserActive);
     }
     
     private void Update()
     {
         ShootHandler();
+        LaserSwitch();
         // DebugRaycast();
     }
 
     private void ShootHandler()
     {
+        if (!_isLaserActive) return;
+        
         _fireTimer += Time.deltaTime;
         IDamageable currentTarget = null;
         if (Physics.Raycast(laserSpawn.position, laserSpawn.forward, out RaycastHit hit, shootRange))
@@ -61,6 +68,14 @@ public class PlayerShoot : MonoBehaviour
         }
 
         StartCoroutine(ShootLaser());
+
+    }
+
+    private void LaserSwitch()
+    {
+        if (!Input.GetKeyDown(KeyCode.Q)) return;
+        _isLaserActive = !_isLaserActive;
+        laserGameObject.SetActive(_isLaserActive);
 
     }
 
