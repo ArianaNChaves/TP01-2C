@@ -310,6 +310,13 @@ MonoBehaviour:
   - {fileID: 1559953100}
   - {fileID: 1235971154}
   - {fileID: 1408747721}
+  paths:
+  - waypoints:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    target: {fileID: 0}
 --- !u!4 &128055136
 Transform:
   m_ObjectHideFlags: 0
