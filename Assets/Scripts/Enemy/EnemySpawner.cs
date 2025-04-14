@@ -12,10 +12,13 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Destinations")]
     [SerializeField] private List<Transform> destinationPoints;
+    
+    [Header("Paths")]
+    [SerializeField] private List<Path> paths;
 
     private float _spawnTimer;
 
-    void Start()
+    private void Start()
     {
         if (enemyPrefabs == null || enemyPrefabs.Count == 0)
         {
@@ -37,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         _spawnTimer = spawnRate;
     }
 
-    void Update()
+    private void Update()
     {
         _spawnTimer -= Time.deltaTime;
 
@@ -48,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnEnemy()
+    private void SpawnEnemy()
     {
         int randomEnemyIndex = Random.Range(0, enemyPrefabs.Count);
         GameObject selectedEnemyPrefab = enemyPrefabs[randomEnemyIndex];
@@ -64,4 +67,12 @@ public class EnemySpawner : MonoBehaviour
             enemyMovement.SetDestination(selectedDestination.position);
         }
     }
+
+    
+}
+[System.Serializable]
+public class Path //todo Ver donde iria este choclo de codigo, enemy manager? en el mismo enemy?
+{
+    public List<Transform> waypoints;
+    public GameObject target;
 }
