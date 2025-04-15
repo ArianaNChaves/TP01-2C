@@ -45,7 +45,7 @@ public class PlayerShoot : MonoBehaviour
         if (Physics.Raycast(laserSpawn.position, laserSpawn.forward, out RaycastHit hit, shootRange))
         {
             currentTarget = hit.collider.GetComponent<IDamageable>();
-            if (hit.collider.gameObject.CompareTag("Enemy")) //todo compararlo por layermask en vez de tag
+            if (Utilities.CompareLayerAndMask(enemyLayerMask, hit.collider.gameObject.layer))
             {
                 ChangeMaterial(laserHitMaterial);
                 _isAimingAEnemy = true; 

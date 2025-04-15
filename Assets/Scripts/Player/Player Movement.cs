@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float horizontalAcceleration;
     [SerializeField] private float verticalForce;
     [SerializeField] private float maxSpeed;
-    [SerializeField] private float horizontalDrag;
+    // [SerializeField] private float horizontalDrag;
 
     private Rigidbody _rigidbody;
     private Vector3 _moveDirection;
@@ -31,11 +31,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 horizontalVelocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
         
         horizontalVelocity += _moveDirection * (horizontalAcceleration * Time.fixedDeltaTime);
-        
-        if (_moveDirection == Vector3.zero)
-        {
-            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, horizontalDrag * Time.fixedDeltaTime);
-        }
         
         if (horizontalVelocity.magnitude >= maxSpeed)
         {

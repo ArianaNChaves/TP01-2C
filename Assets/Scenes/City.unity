@@ -2014,7 +2014,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.25, z: 15.65}
-  m_LocalScale: {x: 0.049999997, y: -16.517902, z: 0.049999997}
+  m_LocalScale: {x: 0.049999997, y: -15.272452, z: 0.049999997}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1425876584}
@@ -15464,6 +15464,7 @@ GameObject:
   - component: {fileID: 1898486510}
   - component: {fileID: 1898486512}
   - component: {fileID: 1898486513}
+  - component: {fileID: 1898486514}
   m_Layer: 8
   m_Name: Drone
   m_TagString: Player
@@ -15497,7 +15498,7 @@ Rigidbody:
   m_GameObject: {fileID: 1898486503}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -15527,10 +15528,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791e6521e474d9346ab3019133fd4689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalAcceleration: 7
+  horizontalAcceleration: 15
   verticalForce: 0.2
-  maxSpeed: 5.5
-  horizontalDrag: 3
+  maxSpeed: 100
 --- !u!114 &1898486508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15565,7 +15565,7 @@ MonoBehaviour:
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  shootRange: 31.3
+  shootRange: 29
   fireRate: 1
   laserDuration: 0.1
   damage: 2
@@ -15725,6 +15725,22 @@ CapsuleCollider:
   m_Height: 2.59
   m_Direction: 2
   m_Center: {x: 0, y: 0.22, z: -0.08}
+--- !u!114 &1898486514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898486503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c905ef37edffce64dbd507ac80a000ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 3
+  buildLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1001 &1909488785
 PrefabInstance:
   m_ObjectHideFlags: 0
