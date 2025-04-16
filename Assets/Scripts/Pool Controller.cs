@@ -1,31 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum ObjectType
 {
     Bullet,
-    Enemy,
+    TankEnemy,
+    NormalEnemy
     
 }
 public class PoolController : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab; 
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject normalEnemyPrefab;
+    [SerializeField] private GameObject tankEnemyPrefab;
     [SerializeField] private int initialCountOfBullet;
-    [SerializeField] private int initialCountOfEnemy;
+    [SerializeField] private int initialCountOfNormalEnemy;
+    [SerializeField] private int initialCountOfTankEnemy;
     
     
     private Dictionary<ObjectType, List<GameObject>> _poolDeactivated;
-    private Dictionary<ObjectType, List<GameObject>> _poolActivated;
 
     private void Start()
     {
         _poolDeactivated = new Dictionary<ObjectType, List<GameObject>>();
-        _poolActivated = new Dictionary<ObjectType, List<GameObject>>();
 
         _poolDeactivated[ObjectType.Bullet] = new List<GameObject>();
-        _poolDeactivated[ObjectType.Enemy] = new List<GameObject>();
+        _poolDeactivated[ObjectType.TankEnemy] = new List<GameObject>();
+        _poolDeactivated[ObjectType.NormalEnemy] = new List<GameObject>();
         
         for (int i = 0; i < initialCountOfBullet; i++)
         {
@@ -33,12 +36,19 @@ public class PoolController : MonoBehaviour
             bullet.SetActive(false);
             _poolDeactivated[ObjectType.Bullet].Add(bullet); 
         }
-        for (int i = 0; i < initialCountOfEnemy; i++)
+        for (int i = 0; i < initialCountOfTankEnemy; i++)
         {
-            var score = Instantiate(enemyPrefab);
-            score.SetActive(false);
-            _poolDeactivated[ObjectType.Enemy].Add(score);
+            var enemy = Instantiate(tankEnemyPrefab);
+            enemy.SetActive(false);
+            _poolDeactivated[ObjectType.TankEnemy].Add(enemy);
         }
+        for (int i = 0; i < initialCountOfNormalEnemy; i++)
+        {
+            var enemy = Instantiate(normalEnemyPrefab);
+            enemy.SetActive(false);
+            _poolDeactivated[ObjectType.NormalEnemy].Add(enemy);
+        }
+        
         
     }
 
@@ -50,7 +60,6 @@ public class PoolController : MonoBehaviour
         {
             objectFromPool = _poolDeactivated[type][0];
             _poolDeactivated[type].RemoveAt(0);
-            _poolActivated[type].Add(objectFromPool);
         }
         else
         {
@@ -58,9 +67,18 @@ public class PoolController : MonoBehaviour
             {
                 case ObjectType.Bullet:
                     objectFromPool = Instantiate(bulletPrefab);
+                    objectFromPool.SetActive(false);
+                    // _poolDeactivated[ObjectType.Bullet].Add(objectFromPool);
                     break;
-                case ObjectType.Enemy:
-                    objectFromPool = Instantiate(enemyPrefab);
+                case ObjectType.TankEnemy:
+                    objectFromPool = Instantiate(tankEnemyPrefab);
+                    objectFromPool.SetActive(false);
+                    // _poolDeactivated[ObjectType.TankEnemy].Add(objectFromPool);
+                    break;
+                case ObjectType.NormalEnemy:
+                    objectFromPool = Instantiate(normalEnemyPrefab);
+                    objectFromPool.SetActive(false);
+                    // _poolDeactivated[ObjectType.NormalEnemy].Add(objectFromPool);
                     break;
                 default:
                     Debug.LogError("GetObjectFromPool - ELSE - type error");
@@ -71,12 +89,14 @@ public class PoolController : MonoBehaviour
         switch (type)
         {
             case ObjectType.Bullet:
-                Debug.Log("Type.Bullet");
-                //return objectFromPool;
-                break;
-            case ObjectType.Enemy:
-                Debug.Log("Type.Enemy");
-                break;
+                // Debug.Log("Type.Bullet");
+                return objectFromPool;
+            case ObjectType.TankEnemy:
+                // Debug.Log("Type.TankEnemy");
+                return objectFromPool;
+            case ObjectType.NormalEnemy:
+                // Debug.Log("Type.NormalEnemy");
+                return objectFromPool;
             default:
                 Debug.LogError("GetObjectFromPool - ObjectType error");
                 break;
@@ -89,7 +109,6 @@ public class PoolController : MonoBehaviour
     public void ReturnObjectToPool(GameObject objectToReturn, ObjectType type)
     {
         objectToReturn.SetActive(false);
-        _poolActivated[type].Remove(objectToReturn);
         _poolDeactivated[type].Add(objectToReturn);
     }
     

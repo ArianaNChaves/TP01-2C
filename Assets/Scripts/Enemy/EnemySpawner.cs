@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Enemy Prefabs")]
-    [SerializeField] private List<GameObject> enemyPrefabs;
+    // [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] private PoolController poolController;
 
     [Header("Spawning")]
     [SerializeField] private float spawnRate = 2.0f;
@@ -15,16 +16,17 @@ public class EnemySpawner : MonoBehaviour
     
     [Header("Paths")]
     [SerializeField] private List<Path> paths;
-
+    
+    
     private float _spawnTimer;
 
     private void Start()
     {
-        if (enemyPrefabs == null || enemyPrefabs.Count == 0)
-        {
-            enabled = false;
-            return;
-        }
+        // if (enemyPrefabs == null || enemyPrefabs.Count == 0)
+        // {
+        //     enabled = false;
+        //     return;
+        // }
 
         if (destinationPoints == null || destinationPoints.Count == 0)
         {
@@ -53,21 +55,33 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        int randomEnemyIndex = Random.Range(0, enemyPrefabs.Count);
-        GameObject selectedEnemyPrefab = enemyPrefabs[randomEnemyIndex];
-
+        // int randomEnemyIndex = Random.Range(0, enemyPrefabs.Count);
+        int randomNumer = Random.Range(0, 2);
+        GameObject selectedEnemyPrefab;
+        if (randomNumer == 0)
+        {
+            selectedEnemyPrefab = poolController.GetObjectFromPool(ObjectType.NormalEnemy);
+        }
+        else
+        {
+            selectedEnemyPrefab = poolController.GetObjectFromPool(ObjectType.TankEnemy);
+        }
+        
+            
         int randomDestinationIndex = Random.Range(0, destinationPoints.Count);
         Transform selectedDestination = destinationPoints[randomDestinationIndex];
 
-        GameObject newEnemy = Instantiate(selectedEnemyPrefab, spawnPoint.position, spawnPoint.rotation);
-
-        var enemyMovement = newEnemy.GetComponent<EnemyMovement>();
+        // GameObject newEnemy = Instantiate(selectedEnemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        selectedEnemyPrefab.transform.position = spawnPoint.position;
+        selectedEnemyPrefab.transform.rotation = spawnPoint.rotation;
+        selectedEnemyPrefab.SetActive(true);
+        var enemyMovement = selectedEnemyPrefab.GetComponent<EnemyMovement>();
         if (enemyMovement != null)
         {
             enemyMovement.SetDestination(selectedDestination.position);
         }
     }
-
+    
     
 }
 [System.Serializable]
