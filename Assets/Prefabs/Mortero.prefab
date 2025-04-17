@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8982646215942902329}
+  - component: {fileID: 5738682983324744322}
   m_Layer: 0
   m_Name: Mortero
   m_TagString: Untagged
@@ -70,6 +71,28 @@ Transform:
   - {fileID: 3101019140996694720}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5738682983324744322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6613316699274944271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49453b7f89c53e946acdedf3984eb692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolController: {fileID: 0}
+  bulletSpawnPoint: {fileID: 3101019140996694720}
+  target: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  bulletSpeed: 5
+  bulletLifeTime: 3
+  bulletDamage: 3
+  aimDistance: 10
 --- !u!1001 &2067787666227456693
 PrefabInstance:
   m_ObjectHideFlags: 0
