@@ -7,7 +7,7 @@ public class MortarShoot : MonoBehaviour
     [Header("Morter Settings")]
     [SerializeField] private PoolController poolController;
     [SerializeField] private Transform bulletSpawnPoint;
-    [SerializeField] private Transform target;
+    [SerializeField] private GameObject target;
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private float aimDistance;
     
@@ -32,15 +32,17 @@ public class MortarShoot : MonoBehaviour
 
     private bool CanShoot()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
+        if (!target) return false;
+        float distance = Vector3.Distance(target.transform.position, transform.position);
         if (!(distance <= aimDistance)) return false;
-        _direction = (target.position - bulletSpawnPoint.position).normalized;
+        _direction = (target.transform.position - bulletSpawnPoint.position).normalized;
         RaycastHit hit;
             
         if (Physics.Raycast(bulletSpawnPoint.position, _direction, out hit, distance))
         {
             bool hitIsTarget = Utilities.CompareLayerAndMask(targetLayer, hit.collider.gameObject.layer);
             _endHit = hit.point;
+            
             return hitIsTarget;
         }
         else
@@ -58,6 +60,14 @@ public class MortarShoot : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity); //todo borrar y aplicar poolcontroller
             bullet.GetComponent<Bullet>().Activate(bulletSpawnPoint.position, _endHit, bulletSpeed, bulletLifeTime);
             _timer = 0;
+            if (target && target.TryGetComponent(out PlayerHealth health))
+            {
+                health.TakeDamage(bulletDamage);
+            }
+            else
+            {
+                Debug.LogError($"El player no tiene el scrip de PlayerHealth o no existe");
+            }
         }
 
     }

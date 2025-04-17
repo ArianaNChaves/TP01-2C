@@ -1172,23 +1172,11 @@ PrefabInstance:
     - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 1536997300}
-    - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
-      propertyPath: shootRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
-      propertyPath: aimDistance
-      value: 20
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1536997296}
     - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: bulletSpeed
-      value: 20
+      value: 45
       objectReference: {fileID: 0}
-    - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 4842155121503321257, guid: 898f339410582d74c944b1e9cf66f618, type: 3}
     - target: {fileID: 6613316699274944271, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: m_Name
       value: Mortero
