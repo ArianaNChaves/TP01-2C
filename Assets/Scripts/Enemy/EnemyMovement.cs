@@ -12,7 +12,10 @@ public class EnemyMovement : MonoBehaviour
     }
 
     [SerializeField] private float moveSpeed = 3.0f;
-    [SerializeField] private float rotationSpeed = 5.0f; 
+    [SerializeField] private float rotationSpeed = 5.0f;
+
+    [SerializeField]
+    private AnimationController animationController;
 
     public EnemyState currentState = EnemyState.Idle;
 
@@ -20,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
     private GameObject _finalTarget;
     private int _currentWaypointIndex = -1; 
     private Transform _currentTargetWaypoint;
-    private float _timeBetweenAttacks;
+    private float _timeBetweenAttacks = 5;
     private float _attackRate = 3;
 
     void Update()
@@ -43,6 +46,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void UpdateIdle()
     {
+        animationController.PlayAnimation(AnimationConstants.EnemyAnimations["Idle"]);
         // Enemy remains idle until a path is set.
     }
 
@@ -50,9 +54,15 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_currentTargetWaypoint == null)
         {
-             Debug.LogError("Current target waypoint is null while in Moving state. Switching to Idle.", this);
+             Debug.LogError("El siguiente waypoint es nulo.", this);
              currentState = EnemyState.Idle;
              return;
+        }
+
+        if (_finalTarget == null)
+        {
+            currentState = EnemyState.Idle;
+            return;
         }
 
         Vector3 targetPosition = _currentTargetWaypoint.position;
@@ -80,7 +90,7 @@ public class EnemyMovement : MonoBehaviour
                 _currentTargetWaypoint = _waypoints[_currentWaypointIndex];
                 if (_currentTargetWaypoint == null)
                 {
-                    throw new System.NullReferenceException($"Waypoint at index {_currentWaypointIndex} in the assigned path is null for enemy {gameObject.name}.");
+                    throw new System.NullReferenceException($"Waypoint numero {_currentWaypointIndex} es nulo para el enemigo {gameObject.name}.");
                 }
             }
         }
@@ -99,15 +109,18 @@ public class EnemyMovement : MonoBehaviour
 
             // --- ADD YOUR ATTACK LOGIC HERE ---\
             _timeBetweenAttacks += Time.deltaTime;
+            
             if (_timeBetweenAttacks >= _attackRate)
             {
+                Debug.Log("TROMPADA");
+                animationController.PlayAnimation(AnimationConstants.EnemyAnimations["Attack"]);
                 _finalTarget.GetComponent<IDamageable>().TakeDamage(5);
                 _timeBetweenAttacks = 0;
             }
         }
         else
         {
-             Debug.LogWarning("Final target is null or destroyed. Switching back to Idle.", this);
+             Debug.LogWarning("El target final es nulo.", this);
              currentState = EnemyState.Idle;
         }
     }
@@ -117,13 +130,13 @@ public class EnemyMovement : MonoBehaviour
         // Basic validation
         if (path == null || path.waypoints == null || path.waypoints.Count == 0 || path.target == null)
         {
-            Debug.LogError("Attempted to assign an invalid path to EnemyMovement. Disabling enemy.", this);
+            // Debug.LogError("Path invalido.", this);
             gameObject.SetActive(false); // RETURN TO POOL
             return;
         }
-        if(path.waypoints[0] == null)
+        if (path.waypoints[0] == null)
         {
-            throw new System.NullReferenceException($"The first waypoint (index 0) in the assigned path is null for enemy {gameObject.name}.");
+            throw new System.NullReferenceException($"El primer waypoint es nulo {gameObject.name}.");
         }
 
 

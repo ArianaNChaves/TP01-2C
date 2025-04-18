@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (paths == null || paths.Count == 0)
         {
-            Debug.LogError("No paths assigned to EnemySpawner. Disabling spawner.", this);
+            Debug.LogError("No hay paths asignados.", this);
             enabled = false;
             return;
         }
@@ -35,21 +35,21 @@ public class EnemySpawner : MonoBehaviour
             bool pathIsValid = true;
             if (path.waypoints == null || path.waypoints.Count == 0)
             {
-                Debug.LogError($"Path validation failed: Path has no waypoints. Skipping this path.", this);
+                Debug.LogError($"Path no tiene waypoints.", this);
                 pathIsValid = false;
             }
             else
             {
                 if (path.waypoints.Any(wp => wp == null))
                 {
-                     Debug.LogError($"Path validation failed: Path contains one or more null waypoints. Skipping this path.", this);
+                     Debug.LogError($"Path contiene waypoints nulos.", this);
                      pathIsValid = false;
                 }
             }
 
             if (path.target == null)
             {
-                Debug.LogError($"Path validation failed: Path target is not assigned. Skipping this path.", this);
+                Debug.LogError($"Path no tiene target", this);
                 pathIsValid = false;
             }
 
@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (_validPaths.Count == 0)
         {
-            Debug.LogError("No valid paths found after validation. Disabling EnemySpawner.", this);
+            Debug.LogError("No hay paths validos.", this);
             enabled = false;
             return;
         }
@@ -73,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (poolController == null)
         {
-            Debug.LogError("PoolController not assigned. Disabling EnemySpawner.", this);
+            Debug.LogError("PoolController no asignada.", this);
             enabled = false;
             return;
         }
@@ -110,7 +110,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (newEnemy == null)
         {
-            Debug.LogError($"Failed to get enemy from pool '{selectedPoolName}'. Check pool configuration.", this);
+            Debug.LogError($"Error obteniendo enemigo de la pool '{selectedPoolName}'.", this);
             return;
         }
 
@@ -128,7 +128,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-             Debug.LogWarning($"Enemy prefab from pool '{selectedPoolName}' does not have an EnemyMovement script attached.", newEnemy);
+             Debug.LogWarning($"Enemigo de la pool '{selectedPoolName}' no tiene script EnemyMovement.", newEnemy);
              poolController.ReturnObjectToPool(selectedPoolName, newEnemy);
         }
     }

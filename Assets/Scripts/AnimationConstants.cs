@@ -5,15 +5,15 @@ public static class AnimationConstants
 {
     public static readonly Dictionary<string, string> NPCAnimations = new Dictionary<string, string>()
     {
-        { "Idle", "Player_Idle" },
-        { "Attacked", "Player_Attacked" }
+        { "Idle", "Idle" },
+        { "Attacked", "Attacked" }
     };
 
     public static readonly Dictionary<string, string> EnemyAnimations = new Dictionary<string, string>()
     {
-        { "Idle", "Enemy_Idle" },
-        { "Walk", "Enemy_Walk" },
-        { "Attack", "Enemy_Attack" },
+        { "Idle", "Idle" },
+        { "Walk", "Walk" },
+        { "Attack", "Attack" },
         { "Death", "Enemy_Death" }
     };
 }
