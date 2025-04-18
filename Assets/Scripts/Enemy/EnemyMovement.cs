@@ -19,7 +19,9 @@ public class EnemyMovement : MonoBehaviour
     private List<Transform> _waypoints;
     private GameObject _finalTarget;
     private int _currentWaypointIndex = -1; 
-    private Transform _currentTargetWaypoint; 
+    private Transform _currentTargetWaypoint;
+    private float _timeBetweenAttacks;
+    private float _attackRate = 3;
 
     void Update()
     {
@@ -95,7 +97,13 @@ public class EnemyMovement : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
 
-            // --- ADD YOUR ATTACK LOGIC HERE ---
+            // --- ADD YOUR ATTACK LOGIC HERE ---\
+            _timeBetweenAttacks += Time.deltaTime;
+            if (_timeBetweenAttacks >= _attackRate)
+            {
+                _finalTarget.GetComponent<IDamageable>().TakeDamage(5);
+                _timeBetweenAttacks = 0;
+            }
         }
         else
         {
