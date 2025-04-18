@@ -1273,6 +1273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128055136}
   - component: {fileID: 128055135}
+  - component: {fileID: 128055137}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -1292,7 +1293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7840ee131bbd4b2499e0d589e3549114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolController: {fileID: 0}
+  normalEnemyPoolName: enemy-pool
+  tankEnemyPoolName: tank-pool
   spawnRate: 2
   spawnPoint: {fileID: 1424550073}
   destinationPoints:
@@ -1307,6 +1309,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     target: {fileID: 0}
+  poolController: {fileID: 128055137}
 --- !u!4 &128055136
 Transform:
   m_ObjectHideFlags: 0
@@ -1322,6 +1325,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &128055137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128055134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b0c883317ddbb49b48628ab1a96561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - prefab: {fileID: 8654200764703154614, guid: b02d5149b171f504ba2dcfb379d0efdd, type: 3}
+    size: 5
+    poolName: enemy-pool
+    pooledObjects: []
+  - prefab: {fileID: 2344051401439758364, guid: 9b0f3120f1770ee45ac3b61a25aba3bb, type: 3}
+    size: 5
+    poolName: tank-pool
+    pooledObjects: []
 --- !u!1001 &131938480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15798,6 +15822,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76f5199136e2cbb44ad600623a8964bf, type: 3}
   m_PrefabInstance: {fileID: 1814988280}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1834345180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 538970691644047767, guid: 9cc0261962c8f8f40849780d6c4f71d7, type: 3}
+  m_PrefabInstance: {fileID: 8572793769969405446}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1834345183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834345180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b268896b5d30854c88b454445f514e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &1842943033
 GameObject:
   m_ObjectHideFlags: 0
@@ -18677,7 +18719,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 538970691644047767, guid: 9cc0261962c8f8f40849780d6c4f71d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1834345183}
   m_SourcePrefab: {fileID: 100100000, guid: 9cc0261962c8f8f40849780d6c4f71d7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
