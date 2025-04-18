@@ -5,7 +5,7 @@ using UnityEngine;
 public class MortarShoot : MonoBehaviour
 {
     [Header("Morter Settings")]
-    [SerializeField] private PoolController poolController;
+    [SerializeField] private GenericPoolController poolController;
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private GameObject target;
     [SerializeField] private LayerMask targetLayer;
@@ -17,12 +17,11 @@ public class MortarShoot : MonoBehaviour
     [SerializeField] private float bulletLifeTime;
     [SerializeField] private int bulletDamage;
     
-    [SerializeField] private GameObject bulletPrefab; //todo borrar y aplicar poolcontroller
-
     private bool _canShoot;
     private Vector3 _direction;
     private Vector3 _endHit;
     private float _timer;
+    private const string BulletPoolName = "bullet-pool";
 
     private void Update()
     {
@@ -57,8 +56,10 @@ public class MortarShoot : MonoBehaviour
         _timer += Time.deltaTime;
         if (_timer >= 2f)
         {
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity); //todo borrar y aplicar poolcontroller
-            bullet.GetComponent<Bullet>().Activate(bulletSpawnPoint.position, _endHit, bulletSpeed, bulletLifeTime);
+            GameObject bullet = poolController.GetObjectFromPool(BulletPoolName);
+            bullet.SetActive(true);
+            bullet.GetComponent<Bullet>().Activate(bulletSpawnPoint.position, _endHit, bulletSpeed, bulletLifeTime, poolController);
+            
             _timer = 0;
             if (target && target.TryGetComponent(out PlayerHealth health))
             {
