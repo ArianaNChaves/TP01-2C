@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq; // Needed for Any() check
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -11,9 +12,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnRate = 2.0f;
     [SerializeField] private Transform spawnPoint;
 
-    [Header("Destinations")]
-    [SerializeField] private List<Transform> destinationPoints;
-
     [Header("Paths")]
     [SerializeField] private List<Path> paths;
 
@@ -21,12 +19,49 @@ public class EnemySpawner : MonoBehaviour
 
 
     private float _spawnTimer;
+    private List<Path> _validPaths = new List<Path>();
 
     private void Start()
     {
-        if (destinationPoints == null || destinationPoints.Count == 0)
+        if (paths == null || paths.Count == 0)
         {
-            Debug.LogError("No destination points assigned. Disabling EnemySpawner.");
+            Debug.LogError("No paths assigned to EnemySpawner. Disabling spawner.", this);
+            enabled = false;
+            return;
+        }
+
+        foreach (var path in paths)
+        {
+            bool pathIsValid = true;
+            if (path.waypoints == null || path.waypoints.Count == 0)
+            {
+                Debug.LogError($"Path validation failed: Path has no waypoints. Skipping this path.", this);
+                pathIsValid = false;
+            }
+            else
+            {
+                if (path.waypoints.Any(wp => wp == null))
+                {
+                     Debug.LogError($"Path validation failed: Path contains one or more null waypoints. Skipping this path.", this);
+                     pathIsValid = false;
+                }
+            }
+
+            if (path.target == null)
+            {
+                Debug.LogError($"Path validation failed: Path target is not assigned. Skipping this path.", this);
+                pathIsValid = false;
+            }
+
+            if (pathIsValid)
+            {
+                _validPaths.Add(path);
+            }
+        }
+
+        if (_validPaths.Count == 0)
+        {
+            Debug.LogError("No valid paths found after validation. Disabling EnemySpawner.", this);
             enabled = false;
             return;
         }
@@ -38,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (poolController == null)
         {
-            Debug.LogError("PoolController not assigned. Disabling EnemySpawner.");
+            Debug.LogError("PoolController not assigned. Disabling EnemySpawner.", this);
             enabled = false;
             return;
         }
@@ -59,6 +94,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if (_validPaths.Count == 0) return;
+
         string selectedPoolName;
         if (Random.Range(0, 2) == 0)
         {
@@ -73,12 +110,12 @@ public class EnemySpawner : MonoBehaviour
 
         if (newEnemy == null)
         {
-            Debug.LogError($"Failed to get enemy from pool '{selectedPoolName}'.  Check pool configuration.");
+            Debug.LogError($"Failed to get enemy from pool '{selectedPoolName}'. Check pool configuration.", this);
             return;
         }
 
-        int randomDestinationIndex = Random.Range(0, destinationPoints.Count);
-        Transform selectedDestination = destinationPoints[randomDestinationIndex];
+        int randomPathIndex = Random.Range(0, _validPaths.Count);
+        Path selectedPath = _validPaths[randomPathIndex];
 
         newEnemy.transform.position = spawnPoint.position;
         newEnemy.transform.rotation = spawnPoint.rotation;
@@ -87,11 +124,12 @@ public class EnemySpawner : MonoBehaviour
         var enemyMovement = newEnemy.GetComponent<EnemyMovement>();
         if (enemyMovement != null)
         {
-            enemyMovement.SetDestination(selectedDestination.position);
+            enemyMovement.SetPath(selectedPath);
         }
         else
         {
-            Debug.LogWarning("Enemy prefab does not have an EnemyMovement script attached.");
+             Debug.LogWarning($"Enemy prefab from pool '{selectedPoolName}' does not have an EnemyMovement script attached.", newEnemy);
+             poolController.ReturnObjectToPool(selectedPoolName, newEnemy);
         }
     }
 }
