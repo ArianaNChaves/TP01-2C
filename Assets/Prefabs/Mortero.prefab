@@ -90,11 +90,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   aimDistance: 20
-  bulletSpeed: 20
+  bulletSpeed: 45
   shootRate: 2
   bulletLifeTime: 3
   bulletDamage: 3
-  bulletPrefab: {fileID: 4842155121503321257, guid: 898f339410582d74c944b1e9cf66f618, type: 3}
 --- !u!1001 &2067787666227456693
 PrefabInstance:
   m_ObjectHideFlags: 0

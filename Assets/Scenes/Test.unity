@@ -1670,10 +1670,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1536997296}
     - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
-      propertyPath: bulletSpeed
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: poolController
       value: 
       objectReference: {fileID: 1278545357}
