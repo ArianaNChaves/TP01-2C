@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private float rotationSpeed = 5.0f;
+    [SerializeField] private int damage;
 
     [SerializeField]
     private AnimationController animationController;
@@ -42,12 +43,10 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    // --- State Logic ---
 
     private void UpdateIdle()
     {
         animationController.PlayAnimation(AnimationConstants.EnemyAnimations["Idle"]);
-        // Enemy remains idle until a path is set.
     }
 
     private void UpdateMoving()
@@ -107,14 +106,13 @@ public class EnemyMovement : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
 
-            // --- ADD YOUR ATTACK LOGIC HERE ---\
             _timeBetweenAttacks += Time.deltaTime;
             
             if (_timeBetweenAttacks >= _attackRate)
             {
                 Debug.Log("TROMPADA");
                 animationController.PlayAnimation(AnimationConstants.EnemyAnimations["Attack"]);
-                _finalTarget.GetComponent<IDamageable>().TakeDamage(5);
+                _finalTarget.GetComponent<IDamageable>().TakeDamage(damage);
                 _timeBetweenAttacks = 0;
             }
         }
@@ -127,7 +125,6 @@ public class EnemyMovement : MonoBehaviour
     
     public void SetPath(Path path)
     {
-        // Basic validation
         if (path == null || path.waypoints == null || path.waypoints.Count == 0 || path.target == null)
         {
             // Debug.LogError("Path invalido.", this);
@@ -146,15 +143,7 @@ public class EnemyMovement : MonoBehaviour
         _currentTargetWaypoint = _waypoints[_currentWaypointIndex];
 
         currentState = EnemyState.Moving; 
-        // play run animation
+        // correr animacion de correr
     }
 
-    public void ResetEnemy()
-    {
-        currentState = EnemyState.Idle;
-        _waypoints = null;
-        _finalTarget = null;
-        _currentWaypointIndex = -1;
-        _currentTargetWaypoint = null;
-    }
 }

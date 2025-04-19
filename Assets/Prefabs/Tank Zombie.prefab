@@ -629,6 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1.5
   rotationSpeed: 5
+  damage: 2
   animationController: {fileID: 6877844931652861515}
   currentState: 0
 --- !u!114 &6877844931652861515
