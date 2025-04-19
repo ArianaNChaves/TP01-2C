@@ -26,6 +26,23 @@ public class UiManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name != "City") return;
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!menuPanel.activeInHierarchy)
+            {
+                ActivateMenuPanel(true);
+            }
+            else
+            {
+                ActivateMenuPanel(false);
+            }
+        }
+    }
+
     private void OnDestroy()
     {
         playButton.onClick.RemoveListener(OnPlayButtonClick);
@@ -36,10 +53,7 @@ public class UiManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "City")
         {
-            if (!menuPanel.activeInHierarchy)
-            {
-                menuPanel.SetActive(true);
-            }   
+            ActivateMenuPanel(false);
         }
         else
         {
@@ -50,5 +64,25 @@ public class UiManager : MonoBehaviour
     private void OnExitButtonClick()
     {
         Application.Quit();
+    }
+
+    private void ActivateMenuPanel(bool active)
+    {
+        if (active)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            playerPanel.SetActive(false);
+            menuPanel.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            menuPanel.SetActive(false);
+            playerPanel.SetActive(true);
+            Time.timeScale = 1;
+        }
     }
 }
