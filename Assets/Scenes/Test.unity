@@ -10697,7 +10697,6 @@ GameObject:
   m_Component:
   - component: {fileID: 935533346}
   - component: {fileID: 935533345}
-  - component: {fileID: 935533343}
   - component: {fileID: 935533344}
   m_Layer: 0
   m_Name: Game Manager
@@ -10706,23 +10705,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &935533343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935533342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b0c883317ddbb49b48628ab1a96561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pools:
-  - {prefab: {fileID: 8654200764703154614, guid: b02d5149b171f504ba2dcfb379d0efdd, type: 3}, size: 5, poolName: enemy-pool, pooledObjects: []
-}
-  - {prefab: {fileID: 2719412111039252631, guid: 7834ae8d2e25ff848b4a7b53319c695e, type: 3}, size: 5, poolName: tank-pool, pooledObjects: []
-}
 --- !u!114 &935533344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10748,8 +10730,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7840ee131bbd4b2499e0d589e3549114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalEnemyPoolName: enemy-pool
-  tankEnemyPoolName: tank-pool
   spawnRate: 5
   spawnPoint: {fileID: 1654230870}
   paths:
@@ -11777,7 +11757,7 @@ PrefabInstance:
     - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: poolController
       value: 
-      objectReference: {fileID: 935533343}
+      objectReference: {fileID: 0}
     - target: {fileID: 6613316699274944271, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: m_Name
       value: Mortero (1)
@@ -15359,7 +15339,7 @@ PrefabInstance:
     - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: poolController
       value: 
-      objectReference: {fileID: 935533343}
+      objectReference: {fileID: 0}
     - target: {fileID: 6613316699274944271, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: m_Name
       value: Mortero
