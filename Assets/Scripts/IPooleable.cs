@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface IPooleable
 {
-
+    public void ReturnObjectToPool();
     
+    public void GetObjectFromPool();
+
 }
