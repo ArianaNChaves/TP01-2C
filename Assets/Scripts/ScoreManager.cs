@@ -16,13 +16,13 @@ public class ScoreManager : MonoBehaviour
         _score = 0;
         UpdateScore();
         EnemyHealth.OnKillEnemy.AddListener(AddScore);
-        npcHealth.OnKillNPC.AddListener(RestScore);
+        NpcHealth.OnKillNPC.AddListener(RestScore);
     }
 
     private void OnDestroy()
     {
         EnemyHealth.OnKillEnemy.RemoveListener(AddScore);
-        npcHealth.OnKillNPC.RemoveListener(RestScore);
+        NpcHealth.OnKillNPC.RemoveListener(RestScore);
     }
     
     private void UpdateScore()
