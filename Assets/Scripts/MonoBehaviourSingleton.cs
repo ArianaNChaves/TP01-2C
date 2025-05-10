@@ -4,22 +4,22 @@ public abstract class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBe
 {
     [SerializeField] private bool dontDestroyOnLoad;
 
-    private static T instance;
-    private static bool wasDestroyed;
+    private static T _instance;
+    private static bool _wasDestroyed;
 
     public static T Instance
     {
         get
         {
-            if (!instance)
+            if (!_instance)
             {
-                instance = FindObjectOfType<T>();
+                _instance = FindObjectOfType<T>();
 
-                if (!instance && !wasDestroyed)
-                    instance = new GameObject(typeof(T).Name).AddComponent<T>();
+                if (!_instance && !_wasDestroyed)
+                    _instance = new GameObject(typeof(T).Name).AddComponent<T>();
             }
 
-            return instance;
+            return _instance;
         }
     }
     
@@ -27,7 +27,7 @@ public abstract class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBe
     {
         if (Instance == this)
         {
-            wasDestroyed = false;
+            _wasDestroyed = false;
 
             if (dontDestroyOnLoad)
                 DontDestroyOnLoad(gameObject);
@@ -42,10 +42,10 @@ public abstract class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBe
 
     private void OnDestroy ()
     {
-        if (instance == this)
+        if (_instance == this)
         {
-            wasDestroyed = true;
-            instance = null;
+            _wasDestroyed = true;
+            _instance = null;
 
             OnDestroyed();
         }

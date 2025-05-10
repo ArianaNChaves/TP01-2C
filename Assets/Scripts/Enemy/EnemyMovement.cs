@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq; // Needed for error checking
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour, IPooleable
 {
     public enum EnemyState
     {
@@ -135,8 +135,7 @@ public class EnemyMovement : MonoBehaviour
         {
             throw new System.NullReferenceException($"El primer waypoint es nulo {gameObject.name}.");
         }
-
-
+        
         _waypoints = path.waypoints;
         _finalTarget = path.target;
         _currentWaypointIndex = 0;
@@ -146,4 +145,13 @@ public class EnemyMovement : MonoBehaviour
         // correr animacion de correr
     }
 
+    public void ReturnObjectToPool()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void GetObjectFromPool()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -64,21 +64,22 @@ public class PoolManager : MonoBehaviourSingleton<PoolManager>
 
     public void InitializePool<T>(T prefab, int minSize = 10) where T : MonoBehaviour, IPooleable
     {
-        if (!prefabs.ContainsKey(typeof(T)))
+        var type = typeof(T);
+        if (!prefabs.ContainsKey(type))
         {
-            prefabs.Add(typeof(T), prefab);
+            prefabs[type] = prefab;
         }
 
-        if (!pool.ContainsKey(typeof(T)))
+        if (!pool.ContainsKey(type))
         {
-            pool.Add(typeof(T), new Queue<IPooleable>());
+            pool[type] = new Queue<IPooleable>();
         }
 
         for (int i = 0; i < minSize; i++)
         {
-            GameObject myGameObject = Instantiate(prefab, transform) as GameObject;
-            myGameObject.SetActive(false);
-            pool[typeof(T)].Enqueue(myGameObject as T);
+            T instance = Instantiate(prefab, transform);
+            instance.gameObject.SetActive(false);
+            pool[type].Enqueue(instance);
         }
     }
 }

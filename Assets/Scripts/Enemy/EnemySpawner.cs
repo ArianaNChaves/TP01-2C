@@ -4,9 +4,9 @@ using System.Linq; // Needed for Any() check
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Pool Names")]
-    [SerializeField] private string normalEnemyPoolName = "enemy-pool";
-    [SerializeField] private string tankEnemyPoolName = "tank-pool";
+    // [Header("Pool Names")]
+    // [SerializeField] private string normalEnemyPoolName = "enemy-pool";
+    // [SerializeField] private string tankEnemyPoolName = "tank-pool";
 
     [Header("Spawning")]
     [SerializeField] private float spawnRate = 2.0f;
@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Paths")]
     [SerializeField] private List<Path> paths;
 
-    [SerializeField] private GenericPoolController poolController;
+    // [SerializeField] private GenericPoolController poolController;
 
 
     private float _spawnTimer;
@@ -71,12 +71,12 @@ public class EnemySpawner : MonoBehaviour
             spawnPoint = transform;
         }
 
-        if (poolController == null)
-        {
-            Debug.LogError("PoolController no asignada.", this);
-            enabled = false;
-            return;
-        }
+        // if (poolController == null)
+        // {
+        //     Debug.LogError("PoolController no asignada.", this);
+        //     enabled = false;
+        //     return;
+        // }
 
         _spawnTimer = spawnRate;
     }
@@ -96,21 +96,22 @@ public class EnemySpawner : MonoBehaviour
     {
         if (_validPaths.Count == 0) return;
 
-        string selectedPoolName;
-        if (Random.Range(0, 2) == 0)
-        {
-            selectedPoolName = normalEnemyPoolName;
-        }
-        else
-        {
-            selectedPoolName = tankEnemyPoolName;
-        }
+        // string selectedPoolName;
+        // if (Random.Range(0, 2) == 0)
+        // {
+        //     selectedPoolName = normalEnemyPoolName;
+        // }
+        // else
+        // {
+        //     selectedPoolName = tankEnemyPoolName;
+        // }
 
-        GameObject newEnemy = poolController.GetObjectFromPool(selectedPoolName);
+        EnemyMovement newEnemy = PoolManager.Instance.Get<EnemyMovement>();
 
         if (newEnemy == null)
         {
-            Debug.LogError($"Error obteniendo enemigo de la pool '{selectedPoolName}'.", this);
+            // Debug.LogError($"Error obteniendo enemigo de la pool '{selectedPoolName}'.", this);
+            Debug.LogError("New enemy es nulo - EnemySpawner.cs - SpawnEnemy");
             return;
         }
 
@@ -119,7 +120,7 @@ public class EnemySpawner : MonoBehaviour
 
         newEnemy.transform.position = spawnPoint.position;
         newEnemy.transform.rotation = spawnPoint.rotation;
-        newEnemy.SetActive(true);
+        newEnemy.gameObject.SetActive(true);
 
         var enemyMovement = newEnemy.GetComponent<EnemyMovement>();
         if (enemyMovement != null)
@@ -128,8 +129,10 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-             Debug.LogWarning($"Enemigo de la pool '{selectedPoolName}' no tiene script EnemyMovement.", newEnemy);
-             poolController.ReturnObjectToPool(selectedPoolName, newEnemy);
+             // Debug.LogWarning($"Enemigo de la pool '{selectedPoolName}' no tiene script EnemyMovement.", newEnemy);
+             Debug.LogError("New enemy no tiene script - EnemySpawner.cs - SpawnEnemy");
+
+             PoolManager.Instance.ReturnToPool(newEnemy);
         }
     }
 }
