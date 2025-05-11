@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   damage: 2
-  lifeTime: 3
+  lifeTime: 2
 --- !u!1 &6877247509340262413
 GameObject:
   m_ObjectHideFlags: 0
