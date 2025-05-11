@@ -14,7 +14,7 @@ public abstract class BaseBullet : MonoBehaviour, IPooleable
     
     protected virtual void Fire(){}
     public virtual void CalculateShoot(Vector3 initialPosition){}
-    public virtual void CalculateShoot(Vector3 initialPosition, Vector3 finalPoisition){}
+    public virtual void CalculateShoot(Vector3 initialPosition, Vector3 finalPosition){}
 
     public float GetSpeed()
     {
