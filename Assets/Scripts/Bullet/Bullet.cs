@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour, IPooleable
     private float _speed;
     private bool _isActivated;
     // private GenericPoolController _poolController;
-    private const string PoolName = "bullet-pool";
+    // private const string PoolName = "bullet-pool";
     private void Update()
     {
         if (!_isActivated) return;
@@ -40,9 +40,5 @@ public class Bullet : MonoBehaviour, IPooleable
     {
         PoolManager.Instance.ReturnToPool(this);
     }
-
-    public void GetObjectFromPool()
-    {
-        throw new NotImplementedException();
-    }
+    
 }

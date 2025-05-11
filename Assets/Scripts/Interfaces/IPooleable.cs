@@ -6,6 +6,4 @@ public interface IPooleable
 {
     public void ReturnObjectToPool();
     
-    public void GetObjectFromPool();
-
 }

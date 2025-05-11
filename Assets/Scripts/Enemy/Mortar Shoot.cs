@@ -12,10 +12,10 @@ public class MortarShoot : MonoBehaviour
     [SerializeField] private float aimDistance;
     
     [Header("Bullet Settings")]
-    [SerializeField] private float bulletSpeed;
+    // [SerializeField] private float bulletSpeed;
     [SerializeField] private float shootRate;
-    [SerializeField] private float bulletLifeTime;
-    [SerializeField] private int bulletDamage;
+    // [SerializeField] private float bulletLifeTime;
+    // [SerializeField] private int bulletDamage;
     
     private bool _canShoot;
     private Vector3 _direction;
@@ -56,14 +56,14 @@ public class MortarShoot : MonoBehaviour
         _timer += Time.deltaTime;
         if (_timer >= 2f)
         {
-            Bullet bullet = PoolManager.Instance.Get<Bullet>();
+            RaycastBullet bullet = PoolManager.Instance.Get<RaycastBullet>();
             bullet.gameObject.SetActive(true);
-            bullet.Activate(bulletSpawnPoint.position, _endHit, bulletSpeed, bulletLifeTime);
+            bullet.CalculateShoot(bulletSpawnPoint.position, _endHit );
             
             _timer = 0;
             if (target && target.TryGetComponent(out PlayerHealth health))
             {
-                health.TakeDamage(bulletDamage);
+                health.TakeDamage(bullet.GetDamage());
             }
             else
             {
