@@ -21,9 +21,11 @@ public class PlayerShoot : MonoBehaviour
     private LineRenderer _lineRenderer;
     private bool _isAimingAEnemy;
     private bool _isLaserActive;
+    [SerializeField] private PlayerCameraController _playerCameraController;
     
     private void Awake()
     {
+        // _playerCameraController = GetComponent<PlayerCameraController>();
         _lineRenderer = GetComponent<LineRenderer>();
         _isLaserActive = true;
         laserGameObject.SetActive(_isLaserActive);
@@ -59,16 +61,34 @@ public class PlayerShoot : MonoBehaviour
         
         if (!Input.GetMouseButtonDown(0) || !(_fireTimer >= fireRate)) return;
         _fireTimer = 0;
-        _lineRenderer.SetPosition(0, laserSpawn.position);
-        _lineRenderer.SetPosition(1, laserSpawn.position + (laserSpawn.forward * shootRange));
+        ShootType(currentTarget);
         
-        if (_isAimingAEnemy && currentTarget != null)
+    }
+
+    private void ShootType(IDamageable currentTaget)
+    {
+        switch (_playerCameraController.GetCurrentCameraView())
         {
-            currentTarget.TakeDamage(damage);
+            case PlayerCameraController.CameraView.FirstPerson:
+                PhysicBullet bullet = PoolManager.Instance.Get<PhysicBullet>();
+                bullet.gameObject.SetActive(true);
+                bullet.CalculateShoot(laserSpawn.transform);
+                break;
+            
+            case PlayerCameraController.CameraView.ThirdPerson:
+                _lineRenderer.SetPosition(0, laserSpawn.position);
+                _lineRenderer.SetPosition(1, laserSpawn.position + (laserSpawn.forward * shootRange));
+                if (_isAimingAEnemy && currentTaget != null)
+                {
+                    currentTaget.TakeDamage(damage);
+                }
+                StartCoroutine(ShootLaser());
+                break;
+            
+            default:
+                Debug.LogError("PlayerShoot.cs - AimHandler - CameraView no definida");
+                break;
         }
-
-        StartCoroutine(ShootLaser());
-
     }
 
     private void LaserSwitch()

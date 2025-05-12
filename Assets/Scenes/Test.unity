@@ -13444,6 +13444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastBulletPrefab: {fileID: -7739586423923470748, guid: 9ceeefde78b73c74ea448524a61915b9, type: 3}
+  physicBulletPrefab: {fileID: -3100484635442951483, guid: 2d706fda849f0914c8d7ea1ee9929a84, type: 3}
   normalEnemyPrefab: {fileID: 5854146394038238768, guid: b02d5149b171f504ba2dcfb379d0efdd, type: 3}
   tankEnemyPrefab: {fileID: 5314526000483367083, guid: 7834ae8d2e25ff848b4a7b53319c695e, type: 3}
 --- !u!4 &1129307839
@@ -15655,6 +15656,7 @@ MonoBehaviour:
   fireRate: 1
   laserDuration: 0.1
   damage: 2
+  _playerCameraController: {fileID: 538955245}
 --- !u!114 &1338634603
 MonoBehaviour:
   m_ObjectHideFlags: 0

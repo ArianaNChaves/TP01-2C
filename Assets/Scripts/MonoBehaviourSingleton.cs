@@ -2,10 +2,10 @@ using UnityEngine;
 
 public abstract class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviourSingleton<T>
 {
-    [SerializeField] private bool dontDestroyOnLoad;
+    [SerializeField] private bool dontDestroyOnLoad = true;
 
     private static T _instance;
-    private static bool _wasDestroyed;
+    private static bool _wasDestroyed = false;
 
     public static T Instance
     {
