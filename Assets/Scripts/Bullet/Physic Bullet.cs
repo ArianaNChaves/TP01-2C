@@ -17,7 +17,7 @@ public class PhysicBullet : BaseBullet
     
     protected override void Fire()
     {
-        rigidbody.velocity = _direction * speed;
+        rigidbody.velocity = transform.up * speed;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -34,11 +34,12 @@ public class PhysicBullet : BaseBullet
         }
     }
     
-    public override void CalculateShoot(Transform spawnTransform)
+    public override void CalculateShoot(Vector3 position, Vector3 direction, Quaternion spawnRotation)
     {
         _isActivated = true;
-        transform.position = spawnTransform.position;
-        transform.rotation = spawnTransform.rotation;
-        _direction = spawnTransform.forward;
+        transform.position = position;
+        transform.rotation = spawnRotation;
+        transform.up = direction;
+        
     }
 }

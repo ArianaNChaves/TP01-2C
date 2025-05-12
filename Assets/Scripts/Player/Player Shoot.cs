@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private Transform laserSpawn;
+    [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private GameObject laserGameObject;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Material laserNormalMaterial;
@@ -72,7 +73,7 @@ public class PlayerShoot : MonoBehaviour
             case PlayerCameraController.CameraView.FirstPerson:
                 PhysicBullet bullet = PoolManager.Instance.Get<PhysicBullet>();
                 bullet.gameObject.SetActive(true);
-                bullet.CalculateShoot(laserSpawn.transform);
+                bullet.CalculateShoot(bulletSpawnPoint.position, transform.forward, transform.rotation);
                 break;
             
             case PlayerCameraController.CameraView.ThirdPerson:
