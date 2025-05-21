@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class UiManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject playerPanel;
+
+    [Header("UI Elements")]
+    [SerializeField] private TextMeshProUGUI highScoreText;
+    
     private void Awake()
     {
         playButton.onClick.AddListener(OnPlayButtonClick);
@@ -24,6 +29,16 @@ public class UiManager : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        UpdateHighScoreDisplay();
+    }
+
+    private void UpdateHighScoreDisplay()
+    {
+        if (highScoreText != null)
+        {
+            int highScore = PlayerPrefs.GetInt("HighScore", 0);
+            highScoreText.text = $"{highScore}";
+        }
     }
 
     private void Update()
@@ -75,6 +90,7 @@ public class UiManager : MonoBehaviour
             playerPanel.SetActive(false);
             menuPanel.SetActive(true);
             Time.timeScale = 0;
+            UpdateHighScoreDisplay();
         }
         else
         {
