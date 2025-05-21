@@ -1431,7 +1431,6 @@ GameObject:
   m_Component:
   - component: {fileID: 128055136}
   - component: {fileID: 128055135}
-  - component: {fileID: 128055137}
   - component: {fileID: 128055138}
   m_Layer: 0
   m_Name: Game Manager
@@ -1452,8 +1451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7840ee131bbd4b2499e0d589e3549114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalEnemyPoolName: enemy-pool
-  tankEnemyPoolName: tank-pool
   spawnRate: 5
   spawnPoint: {fileID: 262430330}
   paths:
@@ -1471,7 +1468,6 @@ MonoBehaviour:
     - {fileID: 1037860161}
     - {fileID: 2081943979}
     target: {fileID: 1890639868}
-  poolController: {fileID: 128055137}
 --- !u!4 &128055136
 Transform:
   m_ObjectHideFlags: 0
@@ -1487,31 +1483,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &128055137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128055134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b0c883317ddbb49b48628ab1a96561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pools:
-  - prefab: {fileID: 8654200764703154614, guid: b02d5149b171f504ba2dcfb379d0efdd, type: 3}
-    size: 5
-    poolName: enemy-pool
-    pooledObjects: []
-  - prefab: {fileID: 2719412111039252631, guid: 7834ae8d2e25ff848b4a7b53319c695e, type: 3}
-    size: 5
-    poolName: tank-pool
-    pooledObjects: []
-  - prefab: {fileID: 4842155121503321257, guid: 898f339410582d74c944b1e9cf66f618, type: 3}
-    size: 10
-    poolName: bullet-pool
-    pooledObjects: []
 --- !u!114 &128055138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10318,6 +10289,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 304767432b7f36348bf67e1459cbdbc5, type: 3}
   m_PrefabInstance: {fileID: 858536176}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &866845637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 866845638}
+  m_Layer: 8
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &866845638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866845637}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.25099993, z: 1.1590004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1898486504}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &878186216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11451,6 +11453,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76f5199136e2cbb44ad600623a8964bf, type: 3}
   m_PrefabInstance: {fileID: 1017498943}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1017831102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1017831104}
+  - component: {fileID: 1017831103}
+  m_Layer: 0
+  m_Name: MANAGERS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1017831103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017831102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce83fc8939d0db4d846302715446685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastBulletPrefab: {fileID: -7739586423923470748, guid: 9ceeefde78b73c74ea448524a61915b9, type: 3}
+  physicBulletPrefab: {fileID: -3100484635442951483, guid: 2d706fda849f0914c8d7ea1ee9929a84, type: 3}
+  normalEnemyPrefab: {fileID: 5854146394038238768, guid: b02d5149b171f504ba2dcfb379d0efdd, type: 3}
+  tankEnemyPrefab: {fileID: 5314526000483367083, guid: 7834ae8d2e25ff848b4a7b53319c695e, type: 3}
+--- !u!4 &1017831104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017831102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.559619, y: 8.460901, z: -46.298866}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1026608323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20711,7 +20761,7 @@ PrefabInstance:
     - target: {fileID: 5738682983324744322, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: poolController
       value: 
-      objectReference: {fileID: 128055137}
+      objectReference: {fileID: 0}
     - target: {fileID: 6613316699274944271, guid: 740bd30e2221fbd46a4f918fdcdebd28, type: 3}
       propertyPath: m_Name
       value: Mortero
@@ -21588,6 +21638,7 @@ Transform:
   m_Children:
   - {fileID: 509009395}
   - {fileID: 185053927}
+  - {fileID: 866845638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1898486506
@@ -21658,6 +21709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserSpawn: {fileID: 1425876584}
+  bulletSpawnPoint: {fileID: 866845638}
   laserGameObject: {fileID: 185053926}
   playerCamera: {fileID: 963194227}
   laserNormalMaterial: {fileID: 2100000, guid: 9a5e08bf80a8edc45939227e393c573f, type: 2}
@@ -21670,6 +21722,7 @@ MonoBehaviour:
   fireRate: 1
   laserDuration: 0.1
   damage: 2
+  _playerCameraController: {fileID: 963194230}
 --- !u!120 &1898486510
 LineRenderer:
   serializedVersion: 2
@@ -23863,3 +23916,4 @@ SceneRoots:
   - {fileID: 813534362}
   - {fileID: 1857665455}
   - {fileID: 854693792}
+  - {fileID: 1017831104}

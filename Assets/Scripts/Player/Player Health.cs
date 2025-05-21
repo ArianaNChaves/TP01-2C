@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 // 2) Player
 public class PlayerHealth : HealthBase
 {
     [SerializeField] private PlayerUI playerUI;
+    [SerializeField] private string gameOverSceneName = "Main Menu"; 
 
     protected override void OnDamage(int damage)
     {
@@ -13,6 +15,6 @@ public class PlayerHealth : HealthBase
 
     protected override void OnDeath()
     {
-        Debug.Log("Muerte y agonía");
+        SceneManager.LoadScene(gameOverSceneName);
     }
 }
