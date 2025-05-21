@@ -15,6 +15,8 @@ public class PlayerHealth : HealthBase
 
     protected override void OnDeath()
     {
+        // Clear all pooled enemies before loading the game over scene
+        PoolManager.Instance.ClearPool();
         SceneManager.LoadScene(gameOverSceneName);
     }
 }

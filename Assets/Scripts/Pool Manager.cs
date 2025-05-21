@@ -11,6 +11,34 @@ public class PoolManager : MonoBehaviourSingleton<PoolManager>
 
     protected override void OnAwaken() {}
 
+    public void ClearPool()
+    {
+        var activeEnemies = FindObjectsOfType<EnemyMovement>();
+        foreach (var enemy in activeEnemies)
+        {
+            if (enemy != null)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+
+        foreach (var poolQueue in pool.Values)
+        {
+            while (poolQueue.Count > 0)
+            {
+                var obj = poolQueue.Dequeue();
+                if (obj != null)
+                {
+                    var monoBehaviour = obj as MonoBehaviour;
+                    if (monoBehaviour != null)
+                    {
+                        Destroy(monoBehaviour.gameObject);
+                    }
+                }
+            }
+        }
+        pool.Clear();
+    }
 
     public T Get<T>() where T : MonoBehaviour, IPooleable
     {
